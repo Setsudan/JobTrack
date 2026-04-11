@@ -1,0 +1,263 @@
+{
+  "@@locale": "en",
+  "appTitle": "JobTrack",
+  "@appTitle": {
+    "description": "Application name shown in task switcher and about."
+  },
+  "navHome": "Home",
+  "navApplications": "Applications",
+  "navNewApplication": "New",
+  "navProfile": "Profile",
+  "profileTitle": "Profile",
+  "homeWelcomeTitle": "Your search, organized",
+  "homeWelcomeSubtitle": "Track links, dates, and outcomes in one calm place.",
+  "homeStatsSectionTitle": "Overview",
+  "@homeStatsSectionTitle": {
+    "description": "Heading above the home stats grid."
+  },
+  "homeStatActiveTitle": "Active",
+  "@homeStatActiveTitle": {
+    "description": "Home stat: count of non-archived applications."
+  },
+  "homeStatWaitingTitle": "Awaiting their reply",
+  "@homeStatWaitingTitle": {
+    "description": "Home stat: applied or no reply yet, still waiting on employer."
+  },
+  "homeStatInterviewTitle": "Interviews",
+  "@homeStatInterviewTitle": {
+    "description": "Home stat: interview scheduled."
+  },
+  "homeStatArchivedTitle": "Archived",
+  "@homeStatArchivedTitle": {
+    "description": "Home stat: archived applications count."
+  },
+  "homeRecentApplications": "Recently updated",
+  "homeViewAllApplications": "View all",
+  "applicationsListTitle": "Applications",
+  "applicationsActiveTab": "Active",
+  "applicationsArchivedTab": "Archived",
+  "applicationsEmptyActive": "No active applications yet. Add one from New.",
+  "applicationsEmptyArchived": "No archived applications.",
+  "applicationCreateTitle": "New application",
+  "labelJobPostingUrl": "Job link",
+  "hintJobPostingUrl": "Paste the posting URL",
+  "buttonFetchJobDetails": "Load details from link",
+  "jobMetadataFetchFailed": "Could not read details from that link. You can still fill the fields yourself.",
+  "jobMetadataNothingFound": "No title was detected. Enter the role and company manually.",
+  "labelJobTitle": "Role",
+  "labelCompanyName": "Company",
+  "labelDateSubmitted": "Date sent",
+  "labelReminderToApplyDate": "Reminder to apply",
+  "@labelReminderToApplyDate": {
+    "description": "Date row when status is saved for later (draft)."
+  },
+  "draftApplyReminderNotificationTitle": "Apply reminder",
+  "@draftApplyReminderNotificationTitle": {
+    "description": "Scheduled local notification title for draft applications."
+  },
+  "draftApplyReminderNotificationBody": "Remember to apply for {roleName} at {companyName}.",
+  "@draftApplyReminderNotificationBody": {
+    "description": "Scheduled notification body; use a hyphen for unknown parts.",
+    "placeholders": {
+      "roleName": {"type": "String"},
+      "companyName": {"type": "String"}
+    }
+  },
+  "notificationChannelDraftRemindersName": "Apply reminders",
+  "@notificationChannelDraftRemindersName": {
+    "description": "Android system notification channel name for draft apply reminders."
+  },
+  "notificationChannelDraftRemindersDescription": "Reminders for postings saved for later",
+  "@notificationChannelDraftRemindersDescription": {
+    "description": "Android notification channel description."
+  },
+  "labelApplicationStatus": "Status",
+  "buttonSaveApplication": "Save",
+  "applicationSaved": "Application saved",
+  "applicationUrlRequired": "Add a valid job link before saving.",
+  "applicationDetailTitle": "Application",
+  "applicationOpenPosting": "Open posting",
+  "applicationDelete": "Delete",
+  "applicationDeleteConfirmTitle": "Delete this application?",
+  "applicationDeleteConfirmBody": "This cannot be undone.",
+  "applicationConfirmDelete": "Delete",
+  "jobStatusDraft": "Saved for later",
+  "@jobStatusDraft": {
+    "description": "Pipeline: not sent yet."
+  },
+  "jobStatusSubmitted": "Applied",
+  "jobStatusNoResponseYet": "No reply yet",
+  "jobStatusInterviewScheduled": "Interview scheduled",
+  "jobStatusDecisionPending": "Waiting on their decision",
+  "jobStatusClosedNotSelected": "Moving on",
+  "jobStatusOfferAccepted": "Offer accepted",
+  "archiveSemesterFirstHalf": "1st semester",
+  "archiveSemesterSecondHalf": "2nd semester",
+  "archiveUntitledRole": "Applications",
+  "archiveGroupDisplay": "{jobTitle} - {semesterLabel} {year}",
+  "@archiveGroupDisplay": {
+    "placeholders": {
+      "jobTitle": {"type": "String"},
+      "semesterLabel": {"type": "String"},
+      "year": {"type": "String"}
+    }
+  },
+  "hireAskJobHuntDoneTitle": "Close your search?",
+  "hireAskJobHuntDoneBody": "Are you done looking for a role for now?",
+  "hireJobHuntDoneNo": "Still exploring",
+  "hireJobHuntDoneYes": "Yes, I am done",
+  "hireCongratulationsTitle": "Congratulations",
+  "hireCongratulationsBody": "You earned this. Take a moment to enjoy the win.",
+  "hireAskDisposalTitle": "Other applications",
+  "hireAskDisposalBody": "What should we do with your other active applications?",
+  "hireKeepApplications": "Keep them visible",
+  "hireArchiveApplications": "Archive them",
+  "archiveReminderTitle": "Let them know",
+  "archiveReminderBody": "These applications are still waiting for a final answer. Consider sending a short note that you accepted another offer so everyone can move on cleanly.",
+  "archiveReminderEmptyList": "None of your other applications are in the waiting-on-decision stage. You can still archive everything for a fresh start.",
+  "archiveConfirmArchive": "Archive all others",
+  "commonOk": "OK",
+  "commonContinue": "Continue",
+  "commonCancel": "Cancel",
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "Tooltip or label for closing a sheet or dialog."
+  },
+  "sectionAppearance": "Appearance",
+  "sectionLanguage": "Language",
+  "labelBackground": "Background",
+  "labelDisplayLanguage": "Display language",
+  "appearanceSystem": "System",
+  "appearanceWhite": "White",
+  "appearanceBlack": "Black",
+  "appearanceAmoledBlack": "AMOLED black",
+  "languageSystem": "System default",
+  "languageEnglish": "English",
+  "languageFrench": "French",
+  "foundationBlurb": "Theme and language apply everywhere in the app.",
+  "applicationsCount": "{count, plural, =0{No applications yet} one{1 application} other{{count} applications}}",
+  "@applicationsCount": {
+    "description": "Active applications count on home.",
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "profileSectionIdentity": "Identity",
+  "profileSectionContact": "Contact",
+  "profileSectionSocial": "Social links",
+  "profileSectionResumes": "Resumes",
+  "labelProfileDisplayName": "Display name",
+  "labelProfileHeadline": "Headline",
+  "labelProfileEmail": "Email",
+  "labelProfilePhone": "Phone",
+  "labelProfileBio": "Bio",
+  "labelProfileGithub": "GitHub URL",
+  "labelProfileGitlab": "GitLab URL",
+  "labelProfileLinkedin": "LinkedIn URL",
+  "labelProfileDribbble": "Dribbble URL",
+  "labelProfileBehance": "Behance URL",
+  "profileSave": "Save",
+  "profileSaved": "Profile saved",
+  "profileShare": "Share profile card",
+  "profileShareSubject": "Profile card",
+  "profileShareEmpty": "Add your name, contact, or a social link before sharing.",
+  "profileInvalidUrl": "That URL does not look valid. Check the field and try again.",
+  "profileAddResume": "Add resume",
+  "profileOpenResume": "Open",
+  "profileRemoveResume": "Remove",
+  "profileResumeUnsupported": "Saving resumes is not available on this platform.",
+  "profileResumeReadFailed": "Could not read that file.",
+  "profileResumeWriteFailed": "Could not save that file.",
+  "profileOpenResumeFailed": "Could not open that file.",
+  "socialLinkGithub": "GitHub",
+  "socialLinkGitlab": "GitLab",
+  "socialLinkLinkedin": "LinkedIn",
+  "socialLinkDribbble": "Dribbble",
+  "socialLinkBehance": "Behance",
+  "profileAddSocialLink": "Add another link",
+  "profileRemoveSocialLink": "Remove link",
+  "profileSocialLinksEmptyHint": "Add portfolio or social links if you like.",
+  "profileUrlHint": "https://",
+  "sectionSwipeShortcuts": "List swipe shortcuts",
+  "settingsSwipeStartPaneLabel": "Start-side card swipe",
+  "settingsSwipeStartPaneHint": "Opens when you swipe outward on the leading edge of the card in your reading direction.",
+  "settingsSwipeEndPaneLabel": "End-side card swipe",
+  "settingsSwipeEndPaneHint": "Opens when you swipe outward on the trailing edge of the card in your reading direction.",
+  "swipeShortcutAdvanceLabel": "Advance one stage",
+  "applicationSwipeStatusUpdated": "Updated to {statusLabel}.",
+  "@applicationSwipeStatusUpdated": {
+    "placeholders": {
+      "statusLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionFollowUpReminders": "Follow-up reminders",
+  "settingsWaitingFollowUpDaysLabel": "Waiting reply reminder (days)",
+  "settingsWaitingFollowUpDaysHint": "For active applications in Applied or No reply yet, schedule a local reminder when the date is at least this many days old (3 to 30).",
+  "applicationsListMenuTooltip": "More options",
+  "applicationsMenuImportCsv": "Import CSV",
+  "csvImportParseFailed": "Could not read that CSV file.",
+  "csvImportTitle": "Import from CSV",
+  "csvImportSummary": "Imported {importedCount}. Skipped {skippedCount}.",
+  "@csvImportSummary": {
+    "placeholders": {
+      "importedCount": {
+        "type": "int"
+      },
+      "skippedCount": {
+        "type": "int"
+      }
+    }
+  },
+  "csvImportNoRows": "No rows to import.",
+  "csvImportHelpTitle": "Expected columns",
+  "csvImportHelpBody": "The first row should name columns. Supported headers include job link, URL, posting URL, title, role, company, date (YYYY-MM-DD), and optional status.",
+  "csvImportMissingHeaders": "Could not find a job link column.",
+  "waitingFollowUpNotificationTitle": "Follow up on an application",
+  "waitingFollowUpNotificationBody": "Check in on {roleName} at {companyName}.",
+  "@waitingFollowUpNotificationBody": {
+    "placeholders": {
+      "roleName": {
+        "type": "String"
+      },
+      "companyName": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelWaitingFollowUpsName": "Waiting reply reminders",
+  "notificationChannelWaitingFollowUpsDescription": "Nudges for applications still in Applied or No reply yet",
+  "sectionAppWallpaper": "App backdrop",
+  "appWallpaperModeNone": "Default",
+  "appWallpaperModeImage": "Photo",
+  "appWallpaperModeGradient": "Gradient",
+  "appWallpaperModeAnimated": "Animated",
+  "appWallpaperChooseImage": "Choose photo",
+  "appWallpaperClearImage": "Remove photo",
+  "appWallpaperImageImportFailed": "Could not use that image. Try another format.",
+  "appWallpaperStaticPresetsLabel": "Gradient style",
+  "appWallpaperAnimatedPresetsLabel": "Animated style",
+  "appWallpaperPresetOcean": "Ocean",
+  "appWallpaperPresetSunset": "Sunset",
+  "appWallpaperPresetTwilight": "Twilight",
+  "appWallpaperPresetSage": "Sage",
+  "appWallpaperPresetCoral": "Coral",
+  "appWallpaperPresetGlacier": "Glacier",
+  "appWallpaperPresetMidnight": "Midnight",
+  "appWallpaperPresetLavender": "Lavender",
+  "appWallpaperPresetRoseGold": "Rose gold",
+  "appWallpaperPresetSandDune": "Sand dune",
+  "appWallpaperPresetCherryMist": "Cherry mist",
+  "appWallpaperAnimatedAurora": "Aurora",
+  "appWallpaperAnimatedEmber": "Ember",
+  "appWallpaperAnimatedNebula": "Nebula",
+  "appWallpaperAnimatedPrism": "Prism",
+  "appWallpaperAnimatedTide": "Tide",
+  "appWallpaperAnimatedComet": "Comet",
+  "appWallpaperAnimatedForge": "Forge",
+  "appWallpaperAnimatedMeadow": "Meadow"
+}

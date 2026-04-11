@@ -1,0 +1,15 @@
+---
+description: JobTrack UI strings must be localized (English + French).
+alwaysApply: true
+---
+
+# Localization (required)
+
+- Do not put user-visible English or French text directly in Dart widgets (`Text('...')`, `AppBar(title:)`, `InputDecoration.labelText`, `SnackBar`, dialogs, `tooltip`, semantics labels, validation messages, etc.).
+- Add a new key to `lib/l10n/app_en.arb` and the same key to `lib/l10n/app_fr.arb` in the same edit. Use `\uXXXX` escapes in ARB if the file must stay ASCII.
+- Run `flutter gen-l10n` (or `flutter pub get`) after ARB changes.
+- Use `context.l10n` from `package:job_application_tracker/l10n/l10n.dart` instead of `AppLocalizations.of(context)!`.
+- For enum or model display names, add ARB getters and map them in `lib/l10n/` (e.g. `JobApplicationStatusL10n`), not inline strings in features.
+- Brand name `JobTrack` / `appTitle` may stay a single ARB key; do not duplicate ad-hoc title fallbacks in `MaterialApp`.
+- Widget tests must not assert on raw English sentences; import `AppLocalizationsEn` / `AppLocalizationsFr` and use the same getters the UI uses.
+- If `l10n_untranslated.txt` lists keys after `flutter gen-l10n`, add the missing translations before merging.

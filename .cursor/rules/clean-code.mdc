@@ -1,0 +1,49 @@
+---
+description: Clean Dart/Flutter code, minimal comments, and production-quality defaults for JobTrack.
+alwaysApply: true
+---
+
+# Clean code and quality (JobTrack)
+
+## Comments
+
+- Prefer clear names, small functions, and obvious structure over comments. Code should read without a running commentary.
+- Comment only when the **why** is non-obvious: invariants, workaround for a platform bug, security or performance tradeoffs, or external contract (API, spec). Do not restate what the next line does.
+- No commented-out code; use version control. No file-path or boilerplate headers unless the team already uses them in that file type.
+- Avoid noisy section banners (`// --- Widgets ---`) unless a file is genuinely huge and the team already uses that pattern consistently.
+
+## Changes and scope
+
+- Touch only what the task needs. No drive-by refactors, formatting-only sweeps, or unrelated files in the same change.
+- Match existing style: imports, naming, state management patterns, and abstraction depth in the surrounding code.
+- Delete unused code, imports, and dead branches when you are sure nothing references them; if unsure, confirm with search before removing public APIs.
+
+## Dart and Flutter
+
+- Use strong typing; avoid `dynamic` unless there is a concrete reason. Prefer `final`, immutability where it fits, and exhaustive switches on sealed types when applicable.
+- Prefer one clear control path over deep nesting; extract helpers or widgets when a build method or function grows hard to scan.
+- Do not swallow errors: log or surface failures appropriately; avoid empty `catch` blocks and broad catches without handling.
+- Widgets: keep build methods cheap; avoid heavy work in `build`. Prefer theme and shared widgets over duplicated literals (see `.cursor/rules/one-ui-design.mdc` for UI).
+
+## Quality bar
+
+- Every line in a diff should earn its place: no speculative abstractions, no debug prints left behind, no placeholder copy in user-visible UI (strings go through l10n per `.cursor/rules/i18n.mdc`).
+- When adding behavior, add or update tests where the project already tests similar logic; keep tests readable and assert on stable behavior, not implementation trivia.
+
+## Examples
+
+```dart
+// Avoid: noise
+// Increment the counter by one
+counter++;
+
+// Prefer: nothing, or a why-only note if needed
+// Keep in sync with backend batch size limit (see issue #123).
+```
+
+```dart
+// Avoid: dead code
+// result = oldImplementation();
+
+// Prefer: delete or restore from git
+```

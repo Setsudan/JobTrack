@@ -1,0 +1,42 @@
+---
+description: One UI-inspired layout, spacing, and shape for Flutter UI in JobTrack.
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# One UI-inspired design (JobTrack)
+
+Samsung One UI is a **direction** here: calm, minimal, rounded, easy to tap. Not a pixel-perfect clone.
+
+## Visual language
+
+- Prefer simple screens: one clear primary action when it fits; avoid clutter and redundant chrome.
+- Calm hierarchy: titles plus short subtitles; group related controls in **sections** with spacing or subtle `ColorScheme` surface roles, not heavy borders on every row.
+
+## Shape and depth
+
+- Default rounded geometry on cards, sheets, dialogs, chips, and bar-like surfaces. Use a **small radius family**: about 12-16 for cards/list groupings; about 20-28 for pills and floating bars (match `AppShell` floating nav at 28 when extending that pattern).
+- Prefer flat or soft surfaces using `surfaceContainer*` roles over harsh shadows; use `outline` / thin borders only where clarity needs it (similar to `AppShell` nav border).
+
+## Spacing and touch
+
+- Generous padding: horizontal about 16-24; consistent vertical rhythm between blocks.
+- Touch targets about 48 logical pixels or larger for icon-only and custom tappable rows unless the Material widget already enforces it.
+
+## Flutter implementation
+
+- Centralize repeated radii and padding: extend `lib/core/theme/app_theme.dart` (`cardTheme`, `dialogTheme`, `bottomSheetTheme`, `inputDecorationTheme`, `filledButtonTheme`, etc.) or shared constants/widgets instead of scattering literals.
+- Reuse Material 3 widgets (`FilledButton`, `ListTile`, `Card`, `SegmentedButton`, ...) and theme them rather than reimplementing.
+- Respect light, dark, and AMOLED appearances; the app uses a fixed black, white, and blue brand palette. Derive chrome from `Theme.of(context).colorScheme`. Status chips use the separate fixed palette in `lib/core/theme/job_application_status_color_scheme.dart`.
+
+```dart
+// Avoid: many one-off radii
+borderRadius: BorderRadius.circular(17)
+
+// Prefer: ThemeData (e.g. cardTheme.shape), or a file-level const next to AppTheme
+```
+
+## Other rules
+
+- User-visible strings: follow `.cursor/rules/i18n.mdc` (ARB + `context.l10n`).
+- Apply this guidance when changing UI; do not broaden scope into unrelated refactors.
