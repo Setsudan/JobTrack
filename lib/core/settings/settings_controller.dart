@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:job_application_tracker/core/settings/app_appearance.dart';
 import 'package:job_application_tracker/core/settings/app_background_kind.dart';
 import 'package:job_application_tracker/core/settings/app_background_presets.dart';
 import 'package:job_application_tracker/core/settings/background_image_import_result.dart';
+import 'package:job_application_tracker/core/settings/background_image_pick_outcome.dart';
 import 'package:job_application_tracker/data/isar/isar_schemas.dart';
 
 class SettingsController extends ChangeNotifier {
@@ -243,18 +245,18 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<BackgroundImageImportResult> importBackgroundImage() async {
+  Future<BackgroundImagePickOutcome> pickBackgroundImageSource() async {
     final FilePickerResult? pick = await FilePicker.platform.pickFiles(
       type: FileType.image,
       allowMultiple: false,
       withData: false,
     );
     if (pick == null || pick.files.isEmpty) {
-      return BackgroundImageImportResult.cancelled;
+      return const BackgroundImagePickCancelled();
     }
     final String? srcPath = pick.files.single.path;
     if (srcPath == null) {
-      return BackgroundImageImportResult.failed;
+      return const BackgroundImagePickInvalid();
     }
     final String ext = p.extension(srcPath).toLowerCase();
     const Set<String> allowed = <String>{
@@ -265,16 +267,26 @@ class SettingsController extends ChangeNotifier {
       '.gif',
     };
     if (!allowed.contains(ext)) {
+      return const BackgroundImagePickInvalid();
+    }
+    return BackgroundImagePickResolved(srcPath);
+  }
+
+  Future<BackgroundImageImportResult> commitWallpaperPng(
+    Uint8List pngBytes,
+  ) async {
+    if (pngBytes.isEmpty) {
       return BackgroundImageImportResult.failed;
     }
     final Directory dir = Directory(_backgroundsDirectoryPath);
     if (!dir.existsSync()) {
       await dir.create(recursive: true);
     }
-    final String newName = 'bg_${DateTime.now().microsecondsSinceEpoch}$ext';
+    final String newName =
+        'bg_${DateTime.now().microsecondsSinceEpoch}.png';
     final File dest = File(p.join(_backgroundsDirectoryPath, newName));
     try {
-      await File(srcPath).copy(dest.path);
+      await dest.writeAsBytes(pngBytes, flush: true);
     } catch (_) {
       return BackgroundImageImportResult.failed;
     }
@@ -376,10 +388,12 @@ class SettingsController extends ChangeNotifier {
   }
 
   Future<void> setLanguageCode(String code) async {
-    if (code == 'system') {
+    final String normalized =
+        (code == 'en' || code == 'fr') ? code : 'system';
+    if (normalized == 'system') {
       _locale = null;
     } else {
-      _locale = Locale(code);
+      _locale = Locale(normalized);
     }
     await _isar.writeTxn(() async {
       final AppSettingsEntity? row = await _isar.appSettingsEntitys
@@ -389,7 +403,7 @@ class SettingsController extends ChangeNotifier {
       if (row == null) {
         return;
       }
-      row.languageCode = code;
+      row.languageCode = normalized;
       await _isar.appSettingsEntitys.put(row);
     });
     notifyListeners();

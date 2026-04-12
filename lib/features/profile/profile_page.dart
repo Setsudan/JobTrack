@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:provider/provider.dart';
 
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/profile/profile_controller.dart';
 import 'package:job_application_tracker/core/profile/profile_models.dart';
 import 'package:job_application_tracker/features/profile/profile_share_helper.dart';
@@ -112,6 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _removeSocialAt(int index) {
+    JobTrackHaptics.button();
     final c = _socialSlots[index].controller;
     setState(() {
       _socialSlots.removeAt(index);
@@ -124,6 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (used.length >= _ProfileSocialKind.values.length) {
       return;
     }
+    JobTrackHaptics.button();
     final next = _ProfileSocialKind.values.firstWhere((k) => !used.contains(k));
     setState(() {
       _socialSlots.add(_SocialSlot(next, TextEditingController()));
@@ -143,6 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _saveProfile() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     for (final s in _socialSlots) {
       final t = s.controller.text.trim();
@@ -175,6 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _shareCard() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final draft = _draftProfile();
     if (!profileHasShareableContent(draft)) {
@@ -208,6 +213,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _addResume() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final err = await context.read<ProfileController>().pickAndAddResume();
     if (!mounted) {
@@ -228,6 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _openResume(String path) async {
+    JobTrackHaptics.button();
     final result = await OpenFilex.open(path);
     if (!mounted) {
       return;
@@ -316,6 +323,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         .toList(),
                     onChanged: (v) {
                       if (v != null) {
+                        JobTrackHaptics.selection();
                         setState(() => slot.kind = v);
                       }
                     },
@@ -499,6 +507,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     icon: const Icon(Icons.delete_outline),
                     tooltip: l10n.profileRemoveResume,
                     onPressed: () {
+                      JobTrackHaptics.button();
                       context.read<ProfileController>().removeResume(r.id);
                     },
                   ),

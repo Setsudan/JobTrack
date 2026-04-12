@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/models/job_application.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
 
@@ -70,14 +71,20 @@ class ApplicationArchiveReminderPage extends StatelessWidget {
           children: [
             Expanded(
               child: OutlinedButton(
-                onPressed: () => Navigator.pop(context, false),
+                onPressed: () {
+                  JobTrackHaptics.button();
+                  Navigator.pop(context, false);
+                },
                 child: Text(l10n.commonCancel),
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: FilledButton(
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () {
+                  JobTrackHaptics.button();
+                  Navigator.pop(context, true);
+                },
                 child: Text(l10n.archiveConfirmArchive),
               ),
             ),

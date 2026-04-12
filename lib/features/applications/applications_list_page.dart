@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/applications/job_applications_csv_import.dart';
 import 'package:job_application_tracker/core/applications/swipe_status_actions.dart';
 import 'package:job_application_tracker/core/models/job_application.dart';
@@ -81,9 +82,11 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
       live.status,
     );
     if (next == live.status) {
+      JobTrackHaptics.button();
       Slidable.of(context)?.close();
       return;
     }
+    JobTrackHaptics.action();
     await apps.update(live.copyWith(status: next));
     if (context.mounted) {
       Slidable.of(context)?.close();
@@ -112,9 +115,11 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
       live.status,
     );
     if (next == live.status) {
+      JobTrackHaptics.button();
       Slidable.of(context)?.close();
       return;
     }
+    JobTrackHaptics.action();
     await apps.update(live.copyWith(status: next));
     if (context.mounted) {
       Slidable.of(context)?.close();
@@ -140,7 +145,10 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(ctx),
+              onPressed: () {
+                JobTrackHaptics.button();
+                Navigator.pop(ctx);
+              },
               child: Text(l10n.commonOk),
             ),
           ],
@@ -183,7 +191,10 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
             content: Text(l10n.csvImportMissingHeaders),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(ctx),
+                onPressed: () {
+                  JobTrackHaptics.button();
+                  Navigator.pop(ctx);
+                },
                 child: Text(l10n.commonOk),
               ),
             ],
@@ -244,6 +255,7 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
           PopupMenuButton<String>(
             tooltip: l10n.applicationsListMenuTooltip,
             onSelected: (String value) async {
+              JobTrackHaptics.selection();
               if (value == 'import') {
                 await _importCsvFromPicker();
               } else if (value == 'help') {
@@ -277,6 +289,7 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
                   selected: !_showArchived,
                   label: Text(l10n.applicationsActiveTab),
                   onSelected: (_) {
+                    JobTrackHaptics.selection();
                     setState(() => _showArchived = false);
                   },
                 ),
@@ -284,6 +297,7 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
                   selected: _showArchived,
                   label: Text(l10n.applicationsArchivedTab),
                   onSelected: (_) {
+                    JobTrackHaptics.selection();
                     setState(() => _showArchived = true);
                   },
                 ),
@@ -316,6 +330,7 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12),
                           onTap: () {
+                            JobTrackHaptics.button();
                             showApplicationDetailSheet(context, a.id);
                           },
                           child: Padding(

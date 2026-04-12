@@ -190,6 +190,10 @@
   "appWallpaperChooseImage": "Choisir une photo",
   "appWallpaperClearImage": "Retirer la photo",
   "appWallpaperImageImportFailed": "Impossible d\u0027utiliser cette image. Essayez un autre format.",
+  "appWallpaperCropTitle": "Placer la photo",
+  "appWallpaperCropHint": "Faites glisser pour d\u00e9placer la photo. Pincez pour zoomer. Le cadre correspond \u00e0 la forme de l\u0027\u00e9cran.",
+  "appWallpaperCropApply": "Utiliser en arri\u00e8re-plan",
+  "appWallpaperCropFailed": "Impossible d\u0027appliquer ce recadrage. R\u00e9essayez.",
   "appWallpaperStaticPresetsLabel": "Style de d\u00e9grad\u00e9",
   "appWallpaperAnimatedPresetsLabel": "Style anim\u00e9",
   "appWallpaperPresetOcean": "Oc\u00e9an",
@@ -210,5 +214,9 @@
   "appWallpaperAnimatedTide": "Mar\u00e9e",
   "appWallpaperAnimatedComet": "Com\u00e8te",
   "appWallpaperAnimatedForge": "Forge",
-  "appWallpaperAnimatedMeadow": "Prairie"
+  "appWallpaperAnimatedMeadow": "Prairie",
+  "startupFailureTitle": "Impossible de d\u00e9marrer JobTrack",
+  "startupFailureBody": "Un probl\u00e8me est survenu au chargement de vos donn\u00e9es. Les d\u00e9tails ont \u00e9t\u00e9 enregistr\u00e9s dans un fichier journal sur cet appareil.",
+  "startupFailureLogPathLabel": "Chemin du fichier journal",
+  "startupFailureTechnicalHint": "R\u00e9sum\u00e9 technique"
 }

@@ -5,6 +5,14 @@ import 'package:job_application_tracker/core/theme/job_track_palette.dart';
 abstract final class AppTheme {
   static const Color _white = Color(0xFFFFFFFF);
   static const Color _black = Color(0xFF000000);
+
+  /// Solid menu surface for [DropdownButton] overlays so options stay readable
+  /// when the color scheme uses translucent surfaces (e.g. wallpaper mode).
+  static Color dropdownMenuBackground(ColorScheme colorScheme) {
+    final Color opaqueBase =
+        colorScheme.brightness == Brightness.light ? _white : _black;
+    return Color.alphaBlend(colorScheme.surfaceContainerHigh, opaqueBase);
+  }
   static const Color _darkElevated = Color(0xFF121212);
   static const Color _darkElevatedHigh = Color(0xFF1E1E1E);
   static const Color _darkElevatedHighest = Color(0xFF2C2C2C);

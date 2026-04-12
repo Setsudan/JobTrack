@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
 
 enum HireWizardOutcome { cancelled, huntOngoing, huntOverKeep, huntOverArchive }
@@ -18,11 +19,17 @@ Future<HireWizardOutcome> runHireWizard(BuildContext context) async {
         content: Text(l10n.hireAskJobHuntDoneBody),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
+            onPressed: () {
+              JobTrackHaptics.button();
+              Navigator.pop(ctx, false);
+            },
             child: Text(l10n.hireJobHuntDoneNo),
           ),
           FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
+            onPressed: () {
+              JobTrackHaptics.button();
+              Navigator.pop(ctx, true);
+            },
             child: Text(l10n.hireJobHuntDoneYes),
           ),
         ],
@@ -57,11 +64,17 @@ Future<HireWizardOutcome> runHireWizard(BuildContext context) async {
         content: Text(l10n.hireAskDisposalBody),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
+            onPressed: () {
+              JobTrackHaptics.button();
+              Navigator.pop(ctx, false);
+            },
             child: Text(l10n.hireKeepApplications),
           ),
           FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
+            onPressed: () {
+              JobTrackHaptics.button();
+              Navigator.pop(ctx, true);
+            },
             child: Text(l10n.hireArchiveApplications),
           ),
         ],
@@ -162,7 +175,10 @@ class _HireConfettiCelebrationDialogState
                   ),
                   const SizedBox(height: 24),
                   FilledButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      JobTrackHaptics.button();
+                      Navigator.pop(context);
+                    },
                     child: Text(l10n.commonOk),
                   ),
                 ],

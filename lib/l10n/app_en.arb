@@ -239,6 +239,22 @@
   "appWallpaperChooseImage": "Choose photo",
   "appWallpaperClearImage": "Remove photo",
   "appWallpaperImageImportFailed": "Could not use that image. Try another format.",
+  "appWallpaperCropTitle": "Position photo",
+  "@appWallpaperCropTitle": {
+    "description": "App bar title for the wallpaper crop and align step."
+  },
+  "appWallpaperCropHint": "Drag to move the photo. Pinch to zoom. The frame matches your screen shape.",
+  "@appWallpaperCropHint": {
+    "description": "Short instructions on the wallpaper crop screen."
+  },
+  "appWallpaperCropApply": "Use as backdrop",
+  "@appWallpaperCropApply": {
+    "description": "Primary button to confirm cropped wallpaper."
+  },
+  "appWallpaperCropFailed": "Could not prepare that crop. Try again.",
+  "@appWallpaperCropFailed": {
+    "description": "Shown when the crop tool fails to output an image."
+  },
   "appWallpaperStaticPresetsLabel": "Gradient style",
   "appWallpaperAnimatedPresetsLabel": "Animated style",
   "appWallpaperPresetOcean": "Ocean",
@@ -259,5 +275,12 @@
   "appWallpaperAnimatedTide": "Tide",
   "appWallpaperAnimatedComet": "Comet",
   "appWallpaperAnimatedForge": "Forge",
-  "appWallpaperAnimatedMeadow": "Meadow"
+  "appWallpaperAnimatedMeadow": "Meadow",
+  "startupFailureTitle": "Could not start JobTrack",
+  "@startupFailureTitle": {
+    "description": "Title when app bootstrap fails before the main UI loads."
+  },
+  "startupFailureBody": "Something went wrong while loading your data. Details were written to a log file on this device.",
+  "startupFailureLogPathLabel": "Log file path",
+  "startupFailureTechnicalHint": "Technical summary"
 }

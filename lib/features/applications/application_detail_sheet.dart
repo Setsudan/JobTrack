@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/features/applications/application_detail_delete.dart';
 import 'package:job_application_tracker/features/applications/application_detail_editor.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
@@ -38,7 +39,10 @@ Future<void> showApplicationDetailSheet(
                     ),
                     IconButton(
                       tooltip: l10n.commonClose,
-                      onPressed: () => Navigator.of(sheetContext).pop(),
+                      onPressed: () {
+                        JobTrackHaptics.button();
+                        Navigator.of(sheetContext).pop();
+                      },
                       icon: const Icon(Icons.close),
                     ),
                     PopupMenuButton<String>(
@@ -49,6 +53,7 @@ Future<void> showApplicationDetailSheet(
                         ),
                       ],
                       onSelected: (String v) {
+                        JobTrackHaptics.selection();
                         if (v == 'delete') {
                           confirmAndDeleteApplication(
                             dragContext,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +32,7 @@ class JobTrackApp extends StatelessWidget {
                     ? AppTheme.amoledBlack()
                     : AppTheme.dark());
         return MaterialApp(
-          onGenerateTitle: (ctx) =>
-              AppLocalizations.of(ctx)?.appTitle ??
-              AppLocalizationsEn().appTitle,
+          onGenerateTitle: (BuildContext ctx) => ctx.l10n.appTitle,
           debugShowCheckedModeBanner: false,
           locale: settings.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -46,11 +45,16 @@ class JobTrackApp extends StatelessWidget {
             if (c == null) {
               return const SizedBox.shrink();
             }
+            final double globalBlurSigma =
+                defaultTargetPlatform == TargetPlatform.android ? 12 : 20;
             final Widget chrome = useGlobalBackdropBlur
                 ? RepaintBoundary(
                     child: ClipRect(
                       child: BackdropFilter(
-                        filter: gaussianBlurFilter(sigmaX: 20, sigmaY: 20),
+                        filter: gaussianBlurFilter(
+                          sigmaX: globalBlurSigma,
+                          sigmaY: globalBlurSigma,
+                        ),
                         child: c,
                       ),
                     ),

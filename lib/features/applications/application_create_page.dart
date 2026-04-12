@@ -3,11 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:job_application_tracker/core/applications/application_archive_label.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/applications/application_id.dart';
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
 import 'package:job_application_tracker/core/applications/job_posting_metadata_service.dart';
 import 'package:job_application_tracker/core/models/job_application.dart';
 import 'package:job_application_tracker/core/models/job_application_status.dart';
+import 'package:job_application_tracker/core/theme/app_theme.dart';
 import 'package:job_application_tracker/core/profile/profile_models.dart';
 import 'package:job_application_tracker/features/applications/application_archive_reminder_page.dart';
 import 'package:job_application_tracker/features/applications/application_detail_sheet.dart';
@@ -58,6 +60,7 @@ class _ApplicationCreatePageState extends State<ApplicationCreatePage> {
   }
 
   Future<void> _pickSubmittedDate() async {
+    JobTrackHaptics.button();
     final picked = await showDatePicker(
       context: context,
       initialDate: _submittedOn,
@@ -70,6 +73,7 @@ class _ApplicationCreatePageState extends State<ApplicationCreatePage> {
   }
 
   Future<void> _fetchMetadata() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final normalized = normalizeOptionalUrl(_urlController.text);
     if (normalized == null) {
@@ -118,6 +122,7 @@ class _ApplicationCreatePageState extends State<ApplicationCreatePage> {
   }
 
   Future<void> _save() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final apps = context.read<ApplicationsController>();
     final id = newJobApplicationId();
@@ -248,6 +253,8 @@ class _ApplicationCreatePageState extends State<ApplicationCreatePage> {
             // ignore: deprecated_member_use
             value: _status,
             decoration: InputDecoration(labelText: l10n.labelApplicationStatus),
+            dropdownColor: AppTheme.dropdownMenuBackground(theme.colorScheme),
+            isExpanded: true,
             items: JobApplicationStatus.values
                 .map(
                   (JobApplicationStatus s) =>
@@ -266,6 +273,7 @@ class _ApplicationCreatePageState extends State<ApplicationCreatePage> {
                 .toList(),
             onChanged: (JobApplicationStatus? v) {
               if (v != null) {
+                JobTrackHaptics.selection();
                 setState(() => _status = v);
               }
             },

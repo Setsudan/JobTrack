@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/ui/gaussian_blur_filter.dart';
 import 'package:job_application_tracker/features/applications/application_create_page.dart';
 import 'package:job_application_tracker/features/applications/applications_list_page.dart';
@@ -69,7 +70,10 @@ class AppShell extends StatelessWidget {
                 child: selectedIndex == 3
                     ? const _FloatingSettingsButton()
                     : _FloatingProfileButton(
-                        onTap: () => nav.setTab(3),
+                        onTap: () {
+                          JobTrackHaptics.button();
+                          nav.setTab(3);
+                        },
                       ),
               ),
               PositionedDirectional(
@@ -91,7 +95,10 @@ class AppShell extends StatelessWidget {
                     _floatingNavThumbReachClearance,
                 child: _FloatingCreateButton(
                   selected: selectedIndex == 2,
-                  onTap: () => nav.setTab(2),
+                  onTap: () {
+                    JobTrackHaptics.button();
+                    nav.setTab(2);
+                  },
                 ),
               ),
             ],
@@ -151,7 +158,10 @@ class _FloatingProfileButton extends StatelessWidget {
         height: AppShell.navBarHeight,
         child: IconButton(
           key: const ValueKey<String>('shell_nav_profile'),
-          onPressed: onTap,
+          onPressed: () {
+            JobTrackHaptics.button();
+            onTap();
+          },
           tooltip: l10n.navProfile,
           style: IconButton.styleFrom(
             foregroundColor: scheme.onSurfaceVariant,
@@ -178,6 +188,7 @@ class _FloatingSettingsButton extends StatelessWidget {
         child: IconButton(
           key: const ValueKey<String>('shell_nav_settings'),
           onPressed: () {
+            JobTrackHaptics.button();
             Navigator.of(context).push<void>(
               MaterialPageRoute<void>(
                 builder: (_) => const SettingsPage(),
@@ -215,7 +226,10 @@ class _FloatingCreateButton extends StatelessWidget {
         height: AppShell.navBarHeight,
         child: IconButton(
           key: const ValueKey<String>('shell_nav_create'),
-          onPressed: onTap,
+          onPressed: () {
+            JobTrackHaptics.button();
+            onTap();
+          },
           tooltip: l10n.navNewApplication,
           style: IconButton.styleFrom(
             foregroundColor: selected ? scheme.primary : scheme.onSurfaceVariant,
@@ -255,7 +269,10 @@ class _FloatingHomeListBar extends StatelessWidget {
               icon: Icons.home_outlined,
               selectedIcon: Icons.home,
               label: l10n.navHome,
-              onTap: () => onDestinationSelected(0),
+              onTap: () {
+                JobTrackHaptics.button();
+                onDestinationSelected(0);
+              },
               scheme: scheme,
             ),
             _NavEntry(
@@ -263,7 +280,10 @@ class _FloatingHomeListBar extends StatelessWidget {
               icon: Icons.list_alt_outlined,
               selectedIcon: Icons.list_alt,
               label: l10n.navApplications,
-              onTap: () => onDestinationSelected(1),
+              onTap: () {
+                JobTrackHaptics.button();
+                onDestinationSelected(1);
+              },
               scheme: scheme,
             ),
           ],
@@ -296,7 +316,10 @@ class _NavEntry extends StatelessWidget {
       width: AppShell.navBarHeight,
       height: AppShell.navBarHeight,
       child: IconButton(
-        onPressed: onTap,
+        onPressed: () {
+          JobTrackHaptics.button();
+          onTap();
+        },
         tooltip: label,
         style: IconButton.styleFrom(
           foregroundColor: selected ? scheme.primary : scheme.onSurfaceVariant,

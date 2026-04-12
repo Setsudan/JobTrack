@@ -27,6 +27,8 @@ subprojects {
                 if (ns == null || ns.isEmpty()) {
                     androidLib.namespace = "dev.isar.isar_flutter_libs"
                 }
+                // Package ships compileSdk 30; androidx resources need API 31+ (android:attr/lStar).
+                androidLib.compileSdk = maxOf(androidLib.compileSdk ?: 0, 34)
             }
         }
     }

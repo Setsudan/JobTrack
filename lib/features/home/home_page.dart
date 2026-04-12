@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/models/job_application.dart';
 import 'package:job_application_tracker/features/applications/application_detail_sheet.dart';
 import 'package:job_application_tracker/features/applications/widgets/job_application_status_chip.dart';
@@ -141,6 +142,7 @@ class _HomePageState extends State<HomePage> {
               ),
               TextButton(
                 onPressed: () {
+                  JobTrackHaptics.button();
                   context.read<AppNavigationBridge>().goToApplications();
                 },
                 child: Text(l10n.homeViewAllApplications),
@@ -176,6 +178,7 @@ class _HomePageState extends State<HomePage> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: () {
+                      JobTrackHaptics.button();
                       showApplicationDetailSheet(context, a.id);
                     },
                     borderRadius: BorderRadius.circular(14),

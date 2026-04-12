@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
 
 Future<void> confirmAndDeleteApplication(
@@ -17,11 +18,17 @@ Future<void> confirmAndDeleteApplication(
         content: Text(l10n.applicationDeleteConfirmBody),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
+            onPressed: () {
+              JobTrackHaptics.button();
+              Navigator.pop(ctx, false);
+            },
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
+            onPressed: () {
+              JobTrackHaptics.button();
+              Navigator.pop(ctx, true);
+            },
             child: Text(l10n.applicationConfirmDelete),
           ),
         ],

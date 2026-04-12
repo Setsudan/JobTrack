@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/features/applications/application_detail_delete.dart';
 import 'package:job_application_tracker/features/applications/application_detail_editor.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
@@ -30,8 +31,10 @@ class ApplicationDetailPage extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: l10n.applicationDelete,
-            onPressed: () =>
-                confirmAndDeleteApplication(context, applicationId),
+            onPressed: () {
+              JobTrackHaptics.button();
+              confirmAndDeleteApplication(context, applicationId);
+            },
             icon: const Icon(Icons.delete_outline),
           ),
         ],

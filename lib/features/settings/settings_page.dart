@@ -1,14 +1,21 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/applications/swipe_status_actions.dart';
 import 'package:job_application_tracker/core/models/job_application_status.dart';
 import 'package:job_application_tracker/core/settings/app_appearance.dart';
 import 'package:job_application_tracker/core/settings/app_background_kind.dart';
 import 'package:job_application_tracker/core/settings/app_background_presets.dart';
 import 'package:job_application_tracker/core/settings/background_image_import_result.dart';
+import 'package:job_application_tracker/core/settings/background_image_pick_outcome.dart';
 import 'package:job_application_tracker/core/settings/settings_controller.dart';
+import 'package:job_application_tracker/core/theme/app_theme.dart';
+import 'package:job_application_tracker/features/settings/wallpaper_crop_page.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -136,10 +143,12 @@ class SettingsPage extends StatelessWidget {
                     startPane: true,
                   ),
                   decoration: const InputDecoration(),
+                  dropdownColor: AppTheme.dropdownMenuBackground(cs),
                   isExpanded: true,
                   items: _swipeMenuItems(l10n),
                   onChanged: (String? v) {
                     if (v != null) {
+                      JobTrackHaptics.selection();
                       context.read<SettingsController>().setSwipeStartPaneAction(
                             v,
                           );
@@ -169,10 +178,12 @@ class SettingsPage extends StatelessWidget {
                     startPane: false,
                   ),
                   decoration: const InputDecoration(),
+                  dropdownColor: AppTheme.dropdownMenuBackground(cs),
                   isExpanded: true,
                   items: _swipeMenuItems(l10n),
                   onChanged: (String? v) {
                     if (v != null) {
+                      JobTrackHaptics.selection();
                       context.read<SettingsController>().setSwipeEndPaneAction(
                             v,
                           );
@@ -242,6 +253,77 @@ String _coerceSwipeStorage(String raw, {required bool startPane}) {
   }
 }
 
+Future<void> _pickAlignAndCommitWallpaper(BuildContext context) async {
+  final AppLocalizations l10n = context.l10n;
+  final SettingsController c = context.read<SettingsController>();
+  final BackgroundImagePickOutcome pick = await c.pickBackgroundImageSource();
+  if (!context.mounted) {
+    return;
+  }
+  switch (pick) {
+    case BackgroundImagePickCancelled():
+      return;
+    case BackgroundImagePickInvalid():
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.appWallpaperImageImportFailed)),
+      );
+      return;
+    case BackgroundImagePickResolved(:final sourcePath):
+      await _readCropAndCommitWallpaper(
+        context,
+        c,
+        l10n,
+        sourcePath,
+      );
+  }
+}
+
+Future<void> _readCropAndCommitWallpaper(
+  BuildContext context,
+  SettingsController c,
+  AppLocalizations l10n,
+  String sourcePath,
+) async {
+  late final Uint8List bytes;
+  try {
+    bytes = await File(sourcePath).readAsBytes();
+  } catch (_) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.appWallpaperImageImportFailed)),
+      );
+    }
+    return;
+  }
+  if (!context.mounted) {
+    return;
+  }
+  final Size mqSize = MediaQuery.sizeOf(context);
+  final double ar =
+      mqSize.height > 0 ? mqSize.width / mqSize.height : 9 / 16;
+  final Uint8List? cropped = await Navigator.of(context).push<Uint8List?>(
+    MaterialPageRoute<Uint8List?>(
+      fullscreenDialog: true,
+      builder: (BuildContext ctx) => WallpaperCropPage(
+        imageBytes: bytes,
+        cropAspectRatio: ar,
+      ),
+    ),
+  );
+  if (!context.mounted || cropped == null) {
+    return;
+  }
+  final BackgroundImageImportResult r = await c.commitWallpaperPng(cropped);
+  if (!context.mounted) {
+    return;
+  }
+  if (r == BackgroundImageImportResult.failed) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.appWallpaperImageImportFailed)),
+    );
+  }
+}
+
 class _AppWallpaperSettingsBody extends StatelessWidget {
   const _AppWallpaperSettingsBody();
 
@@ -262,20 +344,12 @@ class _AppWallpaperSettingsBody extends StatelessWidget {
         _PillRow<AppBackgroundKind>(
           value: kind,
           onSelected: (AppBackgroundKind v) async {
+            JobTrackHaptics.button();
             final SettingsController c = context.read<SettingsController>();
             if (v == AppBackgroundKind.none) {
               await c.setAppBackgroundNone();
             } else if (v == AppBackgroundKind.image) {
-              final BackgroundImageImportResult r =
-                  await c.importBackgroundImage();
-              if (!context.mounted) {
-                return;
-              }
-              if (r == BackgroundImageImportResult.failed) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.appWallpaperImageImportFailed)),
-                );
-              }
+              await _pickAlignAndCommitWallpaper(context);
             } else if (v == AppBackgroundKind.gradient) {
               await c.setAppBackgroundGradient(
                 AppBackgroundPresets.resolveStaticPresetId(
@@ -308,27 +382,19 @@ class _AppWallpaperSettingsBody extends StatelessWidget {
             children: <Widget>[
               FilledButton.tonal(
                 onPressed: () async {
-                  final BackgroundImageImportResult r = await context
-                      .read<SettingsController>()
-                      .importBackgroundImage();
-                  if (!context.mounted) {
-                    return;
-                  }
-                  if (r == BackgroundImageImportResult.failed) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l10n.appWallpaperImageImportFailed),
-                      ),
-                    );
-                  }
+                  JobTrackHaptics.button();
+                  await _pickAlignAndCommitWallpaper(context);
                 },
                 child: Text(l10n.appWallpaperChooseImage),
               ),
               if (hasImage)
                 TextButton(
-                  onPressed: () => context
-                      .read<SettingsController>()
-                      .clearCustomBackgroundImage(),
+                  onPressed: () {
+                    JobTrackHaptics.button();
+                    context
+                        .read<SettingsController>()
+                        .clearCustomBackgroundImage();
+                  },
                   child: Text(l10n.appWallpaperClearImage),
                 ),
             ],
@@ -439,7 +505,10 @@ class _WallpaperPresetChip extends StatelessWidget {
       color: bg,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          JobTrackHaptics.button();
+          onTap();
+        },
         borderRadius: BorderRadius.circular(20),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -494,7 +563,11 @@ class _FollowUpDaysSliderState extends State<_FollowUpDaysSlider> {
             label: '$_draft',
             value: _draft.toDouble(),
             onChanged: (double v) {
-              setState(() => _draft = v.round());
+              final int next = v.round();
+              if (next != _draft) {
+                JobTrackHaptics.selection();
+              }
+              setState(() => _draft = next);
             },
             onChangeEnd: (double v) {
               context.read<SettingsController>().setWaitingFollowUpDays(
@@ -612,7 +685,10 @@ class _SelectPill extends StatelessWidget {
       color: bg,
       borderRadius: BorderRadius.circular(22),
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          JobTrackHaptics.button();
+          onTap();
+        },
         borderRadius: BorderRadius.circular(22),
         splashColor: colorScheme.primary.withValues(alpha: 0.12),
         highlightColor: colorScheme.primary.withValues(alpha: 0.06),

@@ -12,7 +12,9 @@ Future<FlutterLocalNotificationsPlugin> setupLocalNotifications() async {
     return plugin;
   }
 
-  tzdata.initializeTimeZones();
+  try {
+    tzdata.initializeTimeZones();
+  } catch (_) {}
   try {
     final info = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(info.identifier));

@@ -1029,6 +1029,30 @@ abstract class AppLocalizations {
   /// **'Could not use that image. Try another format.'**
   String get appWallpaperImageImportFailed;
 
+  /// App bar title for the wallpaper crop and align step.
+  ///
+  /// In en, this message translates to:
+  /// **'Position photo'**
+  String get appWallpaperCropTitle;
+
+  /// Short instructions on the wallpaper crop screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to move the photo. Pinch to zoom. The frame matches your screen shape.'**
+  String get appWallpaperCropHint;
+
+  /// Primary button to confirm cropped wallpaper.
+  ///
+  /// In en, this message translates to:
+  /// **'Use as backdrop'**
+  String get appWallpaperCropApply;
+
+  /// Shown when the crop tool fails to output an image.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not prepare that crop. Try again.'**
+  String get appWallpaperCropFailed;
+
   /// No description provided for @appWallpaperStaticPresetsLabel.
   ///
   /// In en, this message translates to:
@@ -1154,6 +1178,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Meadow'**
   String get appWallpaperAnimatedMeadow;
+
+  /// Title when app bootstrap fails before the main UI loads.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start JobTrack'**
+  String get startupFailureTitle;
+
+  /// No description provided for @startupFailureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while loading your data. Details were written to a log file on this device.'**
+  String get startupFailureBody;
+
+  /// No description provided for @startupFailureLogPathLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Log file path'**
+  String get startupFailureLogPathLabel;
+
+  /// No description provided for @startupFailureTechnicalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical summary'**
+  String get startupFailureTechnicalHint;
 }
 
 class _AppLocalizationsDelegate

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:job_application_tracker/core/applications/application_archive_label.dart';
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
 import 'package:job_application_tracker/core/applications/applications_controller.dart';
 import 'package:job_application_tracker/core/applications/job_posting_metadata_service.dart';
 import 'package:job_application_tracker/core/models/job_application.dart';
@@ -85,6 +86,7 @@ class _ApplicationDetailEditorState extends State<ApplicationDetailEditor> {
   }
 
   Future<void> _pickSubmittedDate() async {
+    JobTrackHaptics.button();
     final picked = await showDatePicker(
       context: context,
       initialDate: _submittedOn,
@@ -97,6 +99,7 @@ class _ApplicationDetailEditorState extends State<ApplicationDetailEditor> {
   }
 
   Future<void> _fetchMetadata() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final normalized = normalizeOptionalUrl(_urlController.text);
     if (normalized == null) {
@@ -126,6 +129,7 @@ class _ApplicationDetailEditorState extends State<ApplicationDetailEditor> {
   }
 
   Future<void> _openPosting() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final normalized = normalizeOptionalUrl(_urlController.text);
     if (normalized == null) {
@@ -172,6 +176,7 @@ class _ApplicationDetailEditorState extends State<ApplicationDetailEditor> {
   }
 
   Future<void> _save() async {
+    JobTrackHaptics.button();
     final l10n = context.l10n;
     final apps = context.read<ApplicationsController>();
     final previous = apps.byId(widget.applicationId);
@@ -344,6 +349,7 @@ class _ApplicationDetailEditorState extends State<ApplicationDetailEditor> {
             .toList(),
         onChanged: (JobApplicationStatus? v) {
           if (v != null) {
+            JobTrackHaptics.selection();
             setState(() => _status = v);
           }
         },

@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +63,13 @@ class AppWallpaper extends StatelessWidget {
   }
 }
 
+double _wallpaperImageBlurSigma(double requested) {
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    return math.min(requested, 14);
+  }
+  return requested;
+}
+
 class _WallpaperImageLayer extends StatelessWidget {
   const _WallpaperImageLayer({required this.file});
 
@@ -105,8 +114,8 @@ class _WallpaperImageLayer extends StatelessWidget {
               },
               child: ImageFiltered(
                 imageFilter: gaussianBlurFilter(
-                  sigmaX: _gradientBlurSigmaSoft,
-                  sigmaY: _gradientBlurSigmaSoft,
+                  sigmaX: _wallpaperImageBlurSigma(_gradientBlurSigmaSoft),
+                  sigmaY: _wallpaperImageBlurSigma(_gradientBlurSigmaSoft),
                 ),
                 child: DecoratedBox(
                   decoration: imageDecoration,
@@ -133,8 +142,8 @@ class _WallpaperImageLayer extends StatelessWidget {
               },
               child: ImageFiltered(
                 imageFilter: gaussianBlurFilter(
-                  sigmaX: _gradientBlurSigmaStrong,
-                  sigmaY: _gradientBlurSigmaStrong,
+                  sigmaX: _wallpaperImageBlurSigma(_gradientBlurSigmaStrong),
+                  sigmaY: _wallpaperImageBlurSigma(_gradientBlurSigmaStrong),
                 ),
                 child: DecoratedBox(
                   decoration: imageDecoration,

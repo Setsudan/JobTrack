@@ -520,6 +520,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not use that image. Try another format.';
 
   @override
+  String get appWallpaperCropTitle => 'Position photo';
+
+  @override
+  String get appWallpaperCropHint =>
+      'Drag to move the photo. Pinch to zoom. The frame matches your screen shape.';
+
+  @override
+  String get appWallpaperCropApply => 'Use as backdrop';
+
+  @override
+  String get appWallpaperCropFailed =>
+      'Could not prepare that crop. Try again.';
+
+  @override
   String get appWallpaperStaticPresetsLabel => 'Gradient style';
 
   @override
@@ -581,4 +595,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appWallpaperAnimatedMeadow => 'Meadow';
+
+  @override
+  String get startupFailureTitle => 'Could not start JobTrack';
+
+  @override
+  String get startupFailureBody =>
+      'Something went wrong while loading your data. Details were written to a log file on this device.';
+
+  @override
+  String get startupFailureLogPathLabel => 'Log file path';
+
+  @override
+  String get startupFailureTechnicalHint => 'Technical summary';
 }

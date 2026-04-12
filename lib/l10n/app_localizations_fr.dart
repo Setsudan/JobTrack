@@ -521,6 +521,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'utiliser cette image. Essayez un autre format.';
 
   @override
+  String get appWallpaperCropTitle => 'Placer la photo';
+
+  @override
+  String get appWallpaperCropHint =>
+      'Faites glisser pour déplacer la photo. Pincez pour zoomer. Le cadre correspond à la forme de l\'écran.';
+
+  @override
+  String get appWallpaperCropApply => 'Utiliser en arrière-plan';
+
+  @override
+  String get appWallpaperCropFailed =>
+      'Impossible d\'appliquer ce recadrage. Réessayez.';
+
+  @override
   String get appWallpaperStaticPresetsLabel => 'Style de dégradé';
 
   @override
@@ -582,4 +596,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get appWallpaperAnimatedMeadow => 'Prairie';
+
+  @override
+  String get startupFailureTitle => 'Impossible de démarrer JobTrack';
+
+  @override
+  String get startupFailureBody =>
+      'Un problème est survenu au chargement de vos données. Les détails ont été enregistrés dans un fichier journal sur cet appareil.';
+
+  @override
+  String get startupFailureLogPathLabel => 'Chemin du fichier journal';
+
+  @override
+  String get startupFailureTechnicalHint => 'Résumé technique';
 }

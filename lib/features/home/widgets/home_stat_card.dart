@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:job_application_tracker/core/interaction/job_track_haptics.dart';
+
 class HomeStatCard extends StatelessWidget {
   const HomeStatCard({
     required this.icon,
@@ -97,7 +99,10 @@ class HomeStatCard extends StatelessWidget {
 
     if (onTap != null) {
       content = InkWell(
-        onTap: onTap,
+        onTap: () {
+          JobTrackHaptics.button();
+          onTap!();
+        },
         borderRadius: BorderRadius.circular(_cardRadius),
         child: content,
       );
