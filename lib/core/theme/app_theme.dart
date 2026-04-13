@@ -5,6 +5,11 @@ import 'package:job_application_tracker/core/theme/job_track_palette.dart';
 abstract final class AppTheme {
   static const Color _white = Color(0xFFFFFFFF);
   static const Color _black = Color(0xFF000000);
+  static const Color _bentoCanvasLight = Color(0xFFF7F7F9);
+  static const Color _bentoCardBorderLight = Color(0xFFE5E5EA);
+  static const double _bentoCardRadius = 24;
+
+  static const InteractiveInkFeatureFactory _noSplash = NoSplash.splashFactory;
 
   /// Solid menu surface for [DropdownButton] overlays so options stay readable
   /// when the color scheme uses translucent surfaces (e.g. wallpaper mode).
@@ -26,67 +31,115 @@ abstract final class AppTheme {
   );
 
   static ThemeData light() {
-    final base = ColorScheme.fromSeed(
+    final ColorScheme base = ColorScheme.fromSeed(
       seedColor: JobTrackPalette.blue,
       brightness: Brightness.light,
     );
+    final ColorScheme scheme = base.copyWith(
+      surface: _bentoCanvasLight,
+      surfaceDim: _bentoCanvasLight,
+      surfaceBright: _bentoCanvasLight,
+      surfaceContainerLowest: _bentoCanvasLight,
+      surfaceContainerLow: base.surfaceContainerLow,
+      surfaceContainer: base.surfaceContainer,
+      surfaceContainerHigh: base.surfaceContainerHigh,
+      surfaceContainerHighest: base.surfaceContainerHighest,
+    );
     return ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: _white,
+      scaffoldBackgroundColor: _bentoCanvasLight,
       appBarTheme: _transparentAppBarTheme,
-      colorScheme: base.copyWith(
-        surface: _white,
-        surfaceDim: _white,
-        surfaceBright: _white,
-        surfaceContainerLowest: _white,
-        surfaceContainerLow: base.surfaceContainerLow,
-        surfaceContainer: base.surfaceContainer,
-        surfaceContainerHigh: base.surfaceContainerHigh,
-        surfaceContainerHighest: base.surfaceContainerHighest,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashFactory: _noSplash,
+      colorScheme: scheme,
+      cardTheme: CardThemeData(
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        color: _white,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_bentoCardRadius),
+          side: const BorderSide(color: _bentoCardBorderLight, width: 1.5),
+        ),
       ),
     );
   }
 
   static ThemeData dark() {
-    final base = ColorScheme.fromSeed(
+    final ColorScheme base = ColorScheme.fromSeed(
       seedColor: JobTrackPalette.blue,
       brightness: Brightness.dark,
+    );
+    final ColorScheme scheme = base.copyWith(
+      surface: _black,
+      surfaceDim: _black,
+      surfaceBright: _darkElevated,
+      surfaceContainerLowest: _black,
+      surfaceContainerLow: _darkElevated,
+      surfaceContainer: _darkElevated,
+      surfaceContainerHigh: _darkElevatedHigh,
+      surfaceContainerHighest: _darkElevatedHighest,
     );
     return ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: _black,
       appBarTheme: _transparentAppBarTheme,
-      colorScheme: base.copyWith(
-        surface: _black,
-        surfaceDim: _black,
-        surfaceBright: _darkElevated,
-        surfaceContainerLowest: _black,
-        surfaceContainerLow: _darkElevated,
-        surfaceContainer: _darkElevated,
-        surfaceContainerHigh: _darkElevatedHigh,
-        surfaceContainerHighest: _darkElevatedHighest,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashFactory: _noSplash,
+      colorScheme: scheme,
+      cardTheme: CardThemeData(
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        color: _darkElevatedHigh,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_bentoCardRadius),
+          side: BorderSide(
+            color: scheme.outlineVariant.withValues(alpha: 0.45),
+            width: 1.5,
+          ),
+        ),
       ),
     );
   }
 
   static ThemeData amoledBlack() {
-    final base = ColorScheme.fromSeed(
+    final ColorScheme base = ColorScheme.fromSeed(
       seedColor: JobTrackPalette.blue,
       brightness: Brightness.dark,
+    );
+    final ColorScheme scheme = base.copyWith(
+      surface: _black,
+      surfaceDim: _black,
+      surfaceBright: _black,
+      surfaceContainerLowest: _black,
+      surfaceContainerLow: _black,
+      surfaceContainer: _black,
+      surfaceContainerHigh: _black,
+      surfaceContainerHighest: _black,
     );
     return ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: _black,
       appBarTheme: _transparentAppBarTheme,
-      colorScheme: base.copyWith(
-        surface: _black,
-        surfaceDim: _black,
-        surfaceBright: _black,
-        surfaceContainerLowest: _black,
-        surfaceContainerLow: _black,
-        surfaceContainer: _black,
-        surfaceContainerHigh: _black,
-        surfaceContainerHighest: _black,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashFactory: _noSplash,
+      colorScheme: scheme,
+      cardTheme: CardThemeData(
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        color: _darkElevated,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_bentoCardRadius),
+          side: BorderSide(
+            color: scheme.outlineVariant.withValues(alpha: 0.45),
+            width: 1.5,
+          ),
+        ),
       ),
     );
   }

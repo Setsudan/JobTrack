@@ -852,25 +852,25 @@ abstract class AppLocalizations {
   /// No description provided for @settingsSwipeStartPaneLabel.
   ///
   /// In en, this message translates to:
-  /// **'Start-side card swipe'**
+  /// **'Swipe right action'**
   String get settingsSwipeStartPaneLabel;
 
   /// No description provided for @settingsSwipeStartPaneHint.
   ///
   /// In en, this message translates to:
-  /// **'Opens when you swipe outward on the leading edge of the card in your reading direction.'**
+  /// **'Runs when you swipe a card to the right.'**
   String get settingsSwipeStartPaneHint;
 
   /// No description provided for @settingsSwipeEndPaneLabel.
   ///
   /// In en, this message translates to:
-  /// **'End-side card swipe'**
+  /// **'Swipe left action'**
   String get settingsSwipeEndPaneLabel;
 
   /// No description provided for @settingsSwipeEndPaneHint.
   ///
   /// In en, this message translates to:
-  /// **'Opens when you swipe outward on the trailing edge of the card in your reading direction.'**
+  /// **'Runs when you swipe a card to the left.'**
   String get settingsSwipeEndPaneHint;
 
   /// No description provided for @swipeShortcutAdvanceLabel.

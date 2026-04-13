@@ -14,6 +14,9 @@ class HomeStatCard extends StatelessWidget {
     super.key,
   });
 
+  static const double _cardRadius = 24;
+  static const double _tileHeight = 160;
+
   final IconData icon;
   final String title;
   final int value;
@@ -21,8 +24,6 @@ class HomeStatCard extends StatelessWidget {
   final Color iconColor;
   final double? progress;
   final VoidCallback? onTap;
-
-  static const double _cardRadius = 16;
 
   @override
   Widget build(BuildContext context) {
@@ -33,62 +34,57 @@ class HomeStatCard extends StatelessWidget {
 
     Widget content = ExcludeSemantics(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+        padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DecoratedBox(
+                Container(
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: iconBackground,
-                    shape: BoxShape.circle,
+                    color: iconBackground.withValues(alpha: 0.5),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(7),
-                    child: Icon(icon, size: 22, color: iconColor),
-                  ),
+                  child: Icon(icon, size: 20, color: iconColor),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 12),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        valueLabel,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.25,
-                          height: 1.12,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                          height: 1.25,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.3,
+                    ),
                   ),
                 ),
               ],
             ),
+            const Spacer(),
+            FittedBox(
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.scaleDown,
+              child: Text(
+                valueLabel,
+                style: theme.textTheme.displayMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -1.0,
+                  color: scheme.onSurface,
+                ),
+              ),
+            ),
             if (progress != null) ...[
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               ClipRRect(
                 borderRadius: BorderRadius.circular(999),
                 child: LinearProgressIndicator(
                   value: progress!.clamp(0, 1),
-                  minHeight: 4,
+                  minHeight: 6,
                   backgroundColor: scheme.surfaceContainerHighest,
-                  color: scheme.primary,
+                  color: iconColor,
                 ),
               ),
             ],
@@ -111,18 +107,12 @@ class HomeStatCard extends StatelessWidget {
     return Semantics(
       container: true,
       label: semanticsLabel,
-      child: Card(
-        margin: EdgeInsets.zero,
-        elevation: 0,
-        color: scheme.surfaceContainerLow,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_cardRadius),
-          side: BorderSide(
-            color: scheme.outlineVariant.withValues(alpha: 0.45),
-          ),
+      child: SizedBox(
+        height: _tileHeight,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          child: content,
         ),
-        clipBehavior: Clip.antiAlias,
-        child: content,
       ),
     );
   }

@@ -15,6 +15,7 @@ import 'package:job_application_tracker/core/settings/background_image_import_re
 import 'package:job_application_tracker/core/settings/background_image_pick_outcome.dart';
 import 'package:job_application_tracker/core/settings/settings_controller.dart';
 import 'package:job_application_tracker/core/theme/app_theme.dart';
+import 'package:job_application_tracker/core/widgets/select_pill_row.dart';
 import 'package:job_application_tracker/features/settings/wallpaper_crop_page.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
 
@@ -72,7 +73,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                _PillRow<AppAppearance>(
+                SelectPillRow<AppAppearance>(
                   value: settings.appearance,
                   onSelected: (v) =>
                       context.read<SettingsController>().setAppearance(v),
@@ -103,7 +104,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                _PillRow<String>(
+                SelectPillRow<String>(
                   value: settings.languageCodeKey,
                   onSelected: (v) =>
                       context.read<SettingsController>().setLanguageCode(v),
@@ -341,7 +342,7 @@ class _AppWallpaperSettingsBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _PillRow<AppBackgroundKind>(
+        SelectPillRow<AppBackgroundKind>(
           value: kind,
           onSelected: (AppBackgroundKind v) async {
             JobTrackHaptics.button();
@@ -619,90 +620,6 @@ class _SettingsSection extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _PillRow<T> extends StatelessWidget {
-  const _PillRow({
-    required this.value,
-    required this.entries,
-    required this.onSelected,
-  });
-
-  final T value;
-  final List<(T, String)> entries;
-  final ValueChanged<T> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final cs = theme.colorScheme;
-
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: [
-        for (final (id, label) in entries)
-          _SelectPill(
-            label: label,
-            selected: id == value,
-            onTap: () => onSelected(id),
-            colorScheme: cs,
-            textTheme: theme.textTheme,
-          ),
-      ],
-    );
-  }
-}
-
-class _SelectPill extends StatelessWidget {
-  const _SelectPill({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-    required this.colorScheme,
-    required this.textTheme,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  final ColorScheme colorScheme;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    final bg = selected
-        ? colorScheme.primaryContainer
-        : colorScheme.surfaceContainerHighest;
-    final fg = selected
-        ? colorScheme.onPrimaryContainer
-        : colorScheme.onSurfaceVariant;
-
-    return Material(
-      color: bg,
-      borderRadius: BorderRadius.circular(22),
-      child: InkWell(
-        onTap: () {
-          JobTrackHaptics.button();
-          onTap();
-        },
-        borderRadius: BorderRadius.circular(22),
-        splashColor: colorScheme.primary.withValues(alpha: 0.12),
-        highlightColor: colorScheme.primary.withValues(alpha: 0.06),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-          child: Text(
-            label,
-            style: textTheme.labelLarge?.copyWith(
-              color: fg,
-              fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-              letterSpacing: -0.1,
-            ),
-          ),
-        ),
       ),
     );
   }

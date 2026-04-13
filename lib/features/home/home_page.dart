@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              const double gap = 10;
+              const double gap = 16;
               final double tileW = (constraints.maxWidth - gap) / 2;
               Widget tile(HomeStatCard card) {
                 return SizedBox(width: tileW, child: card);

@@ -13,6 +13,7 @@ import 'package:job_application_tracker/core/applications/swipe_status_actions.d
 import 'package:job_application_tracker/core/models/job_application.dart';
 import 'package:job_application_tracker/core/models/job_application_status.dart';
 import 'package:job_application_tracker/core/settings/settings_controller.dart';
+import 'package:job_application_tracker/core/widgets/select_pill_row.dart';
 import 'package:job_application_tracker/features/applications/application_detail_sheet.dart';
 import 'package:job_application_tracker/features/applications/widgets/job_application_status_chip.dart';
 import 'package:job_application_tracker/l10n/l10n.dart';
@@ -282,26 +283,16 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-            child: Wrap(
-              spacing: 8,
-              children: [
-                FilterChip(
-                  selected: !_showArchived,
-                  label: Text(l10n.applicationsActiveTab),
-                  onSelected: (_) {
-                    JobTrackHaptics.selection();
-                    setState(() => _showArchived = false);
-                  },
-                ),
-                FilterChip(
-                  selected: _showArchived,
-                  label: Text(l10n.applicationsArchivedTab),
-                  onSelected: (_) {
-                    JobTrackHaptics.selection();
-                    setState(() => _showArchived = true);
-                  },
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: DualSegmentPill(
+                value: _showArchived,
+                onSelected: (bool v) {
+                  setState(() => _showArchived = v);
+                },
+                firstLabel: l10n.applicationsActiveTab,
+                secondLabel: l10n.applicationsArchivedTab,
+              ),
             ),
           ),
           Expanded(
@@ -393,44 +384,63 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
                         );
                       }
 
+                      final bool startSwipeUseful = startSwipeWouldChangeStatus(
+                        swipeParts[0],
+                        a.status,
+                      );
+                      final bool endSwipeUseful = endSwipeWouldChangeStatus(
+                        swipeParts[1],
+                        a.status,
+                      );
+                      if (!startSwipeUseful && !endSwipeUseful) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: card,
+                        );
+                      }
+
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Slidable(
                           key: ValueKey<String>(a.id),
-                          startActionPane: ActionPane(
-                            motion: const ScrollMotion(),
-                            extentRatio: 0.32,
-                            children: [
-                              SlidableAction(
-                                onPressed: (BuildContext ctx) {
-                                  _applyStartSwipe(ctx, a);
-                                },
-                                backgroundColor:
-                                    theme.colorScheme.primaryContainer,
-                                foregroundColor:
-                                    theme.colorScheme.onPrimaryContainer,
-                                icon: Icons.trending_up,
-                                label: startLabel,
-                              ),
-                            ],
-                          ),
-                          endActionPane: ActionPane(
-                            motion: const ScrollMotion(),
-                            extentRatio: 0.32,
-                            children: [
-                              SlidableAction(
-                                onPressed: (BuildContext ctx) {
-                                  _applyEndSwipe(ctx, a);
-                                },
-                                backgroundColor:
-                                    theme.colorScheme.errorContainer,
-                                foregroundColor:
-                                    theme.colorScheme.onErrorContainer,
-                                icon: Icons.flag_outlined,
-                                label: endLabel,
-                              ),
-                            ],
-                          ),
+                          startActionPane: startSwipeUseful
+                              ? ActionPane(
+                                  motion: const ScrollMotion(),
+                                  extentRatio: 0.32,
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (BuildContext ctx) {
+                                        _applyStartSwipe(ctx, a);
+                                      },
+                                      backgroundColor:
+                                          theme.colorScheme.primaryContainer,
+                                      foregroundColor: theme
+                                          .colorScheme.onPrimaryContainer,
+                                      icon: Icons.trending_up,
+                                      label: startLabel,
+                                    ),
+                                  ],
+                                )
+                              : null,
+                          endActionPane: endSwipeUseful
+                              ? ActionPane(
+                                  motion: const ScrollMotion(),
+                                  extentRatio: 0.32,
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (BuildContext ctx) {
+                                        _applyEndSwipe(ctx, a);
+                                      },
+                                      backgroundColor:
+                                          theme.colorScheme.errorContainer,
+                                      foregroundColor: theme
+                                          .colorScheme.onErrorContainer,
+                                      icon: Icons.flag_outlined,
+                                      label: endLabel,
+                                    ),
+                                  ],
+                                )
+                              : null,
                           child: card,
                         ),
                       );

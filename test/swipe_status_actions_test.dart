@@ -68,4 +68,38 @@ void main() {
       JobApplicationStatus.offerAccepted,
     );
   });
+
+  test('startSwipeWouldChangeStatus is false when advance is capped', () {
+    expect(
+      startSwipeWouldChangeStatus(
+        swipeActionAdvanceStorageValue,
+        JobApplicationStatus.decisionPending,
+      ),
+      isFalse,
+    );
+    expect(
+      startSwipeWouldChangeStatus(
+        swipeActionAdvanceStorageValue,
+        JobApplicationStatus.closedNotSelected,
+      ),
+      isFalse,
+    );
+  });
+
+  test('endSwipeWouldChangeStatus is false when already at target', () {
+    expect(
+      endSwipeWouldChangeStatus(
+        swipeActionAdvanceStorageValue,
+        JobApplicationStatus.closedNotSelected,
+      ),
+      isFalse,
+    );
+    expect(
+      endSwipeWouldChangeStatus(
+        'submitted',
+        JobApplicationStatus.submitted,
+      ),
+      isFalse,
+    );
+  });
 }

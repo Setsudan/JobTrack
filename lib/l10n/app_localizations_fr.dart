@@ -418,18 +418,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sectionSwipeShortcuts => 'Raccourcis de balayage';
 
   @override
-  String get settingsSwipeStartPaneLabel => 'Balayage côté début';
+  String get settingsSwipeStartPaneLabel => 'Action du balayage vers la droite';
 
   @override
   String get settingsSwipeStartPaneHint =>
-      'S\'ouvre quand vous balayez vers l\'extérieur depuis le bord de début de la carte.';
+      'S\'exécute quand vous faites glisser une carte vers la droite.';
 
   @override
-  String get settingsSwipeEndPaneLabel => 'Balayage côté fin';
+  String get settingsSwipeEndPaneLabel => 'Action du balayage vers la gauche';
 
   @override
   String get settingsSwipeEndPaneHint =>
-      'S\'ouvre quand vous balayez vers l\'extérieur depuis le bord opposé.';
+      'S\'exécute quand vous faites glisser une carte vers la gauche.';
 
   @override
   String get swipeShortcutAdvanceLabel => 'Avancer d\'une étape';

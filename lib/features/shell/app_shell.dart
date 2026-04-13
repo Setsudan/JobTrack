@@ -35,6 +35,8 @@ class AppShell extends StatelessWidget {
 
         return Scaffold(
           extendBody: true,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
           body: Stack(
             fit: StackFit.expand,
             children: [

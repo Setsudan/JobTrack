@@ -52,3 +52,17 @@ JobApplicationStatus resolveEndPaneSwipeTarget(
     return JobApplicationStatus.closedNotSelected;
   }
 }
+
+bool startSwipeWouldChangeStatus(
+  String raw,
+  JobApplicationStatus current,
+) {
+  return resolveStartPaneSwipeTarget(raw, current) != current;
+}
+
+bool endSwipeWouldChangeStatus(
+  String raw,
+  JobApplicationStatus current,
+) {
+  return resolveEndPaneSwipeTarget(raw, current) != current;
+}

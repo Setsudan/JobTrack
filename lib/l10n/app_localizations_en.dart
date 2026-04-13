@@ -416,18 +416,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sectionSwipeShortcuts => 'List swipe shortcuts';
 
   @override
-  String get settingsSwipeStartPaneLabel => 'Start-side card swipe';
+  String get settingsSwipeStartPaneLabel => 'Swipe right action';
 
   @override
   String get settingsSwipeStartPaneHint =>
-      'Opens when you swipe outward on the leading edge of the card in your reading direction.';
+      'Runs when you swipe a card to the right.';
 
   @override
-  String get settingsSwipeEndPaneLabel => 'End-side card swipe';
+  String get settingsSwipeEndPaneLabel => 'Swipe left action';
 
   @override
   String get settingsSwipeEndPaneHint =>
-      'Opens when you swipe outward on the trailing edge of the card in your reading direction.';
+      'Runs when you swipe a card to the left.';
 
   @override
   String get swipeShortcutAdvanceLabel => 'Advance one stage';
