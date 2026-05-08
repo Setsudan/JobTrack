@@ -22,11 +22,16 @@ class ApplicationDetailEditor extends StatefulWidget {
     super.key,
     this.scrollController,
     this.listPrefix = const <Widget>[],
+    this.modalSheetHostContext,
   });
 
   final String applicationId;
   final ScrollController? scrollController;
   final List<Widget> listPrefix;
+
+  /// When non-null, this is [showModalBottomSheet]'s builder context; used to
+  /// [Navigator.pop] the sheet (matches the sheet close button).
+  final BuildContext? modalSheetHostContext;
 
   @override
   State<ApplicationDetailEditor> createState() =>
@@ -236,9 +241,12 @@ class _ApplicationDetailEditorState extends State<ApplicationDetailEditor> {
     if (!mounted) {
       return;
     }
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.applicationSaved)));
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final sheetHost = widget.modalSheetHostContext;
+    if (sheetHost != null && sheetHost.mounted) {
+      Navigator.of(sheetHost).pop();
+    }
+    messenger?.showSnackBar(SnackBar(content: Text(l10n.applicationSaved)));
   }
 
   @override

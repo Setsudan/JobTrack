@@ -948,14 +948,38 @@ abstract class AppLocalizations {
   /// No description provided for @csvImportHelpBody.
   ///
   /// In en, this message translates to:
-  /// **'The first row should name columns. Supported headers include job link, URL, posting URL, title, role, company, date (YYYY-MM-DD), and optional status.'**
+  /// **'A header row is optional. JobTrack matches common column names (URL, link, title, company, date, status) and can infer which column holds links. Dates accept YYYY-MM-DD or day/month/year. If a row has no date, you will choose what to use. Blank status defaults to Draft. Links can appear inside a longer cell.'**
   String get csvImportHelpBody;
 
   /// No description provided for @csvImportMissingHeaders.
   ///
   /// In en, this message translates to:
-  /// **'Could not find a job link column.'**
+  /// **'Could not find any job links in this file.'**
   String get csvImportMissingHeaders;
+
+  /// No description provided for @csvImportMissingDateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing dates in CSV'**
+  String get csvImportMissingDateTitle;
+
+  /// No description provided for @csvImportMissingDateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{One imported row has no date in this file.} other{{count} imported rows have no date in this file.}} Choose a date to use for those applications.'**
+  String csvImportMissingDateBody(int count);
+
+  /// No description provided for @csvImportMissingDateUseToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Use today'**
+  String get csvImportMissingDateUseToday;
+
+  /// No description provided for @csvImportMissingDatePickDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date'**
+  String get csvImportMissingDatePickDate;
 
   /// No description provided for @waitingFollowUpNotificationTitle.
   ///

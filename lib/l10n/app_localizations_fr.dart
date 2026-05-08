@@ -474,11 +474,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get csvImportHelpBody =>
-      'La première ligne nomme les colonnes. En-têtes pris en charge : lien d\'offre, URL, titre, rôle, entreprise, date (AAAA-MM-JJ), statut (facultatif).';
+      'Une ligne d\'en-tête est facultative. JobTrack reconnaît les noms de colonnes courants (URL, lien, titre, entreprise, date, statut) et peut deviner la colonne des liens. Dates : AAAA-MM-JJ ou jour/mois/année. Sans date dans une ligne, vous choisissez la date à appliquer. Statut vide : Brouillon par défaut. Un lien peut se trouver dans une cellule plus longue.';
 
   @override
   String get csvImportMissingHeaders =>
-      'Impossible de trouver une colonne de lien d\'offre.';
+      'Aucun lien d\'offre trouvé dans ce fichier.';
+
+  @override
+  String get csvImportMissingDateTitle => 'Dates manquantes dans le CSV';
+
+  @override
+  String csvImportMissingDateBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lignes importées n\'ont pas de date dans ce fichier.',
+      one: 'Une ligne importée n\'a pas de date dans ce fichier.',
+    );
+    return '$_temp0 Choisissez la date à utiliser pour ces candidatures.';
+  }
+
+  @override
+  String get csvImportMissingDateUseToday => 'Aujourd\'hui';
+
+  @override
+  String get csvImportMissingDatePickDate => 'Choisir une date';
 
   @override
   String get waitingFollowUpNotificationTitle => 'Relancer une candidature';

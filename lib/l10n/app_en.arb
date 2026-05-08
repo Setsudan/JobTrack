@@ -215,8 +215,19 @@
   },
   "csvImportNoRows": "No rows to import.",
   "csvImportHelpTitle": "Expected columns",
-  "csvImportHelpBody": "The first row should name columns. Supported headers include job link, URL, posting URL, title, role, company, date (YYYY-MM-DD), and optional status.",
-  "csvImportMissingHeaders": "Could not find a job link column.",
+  "csvImportHelpBody": "A header row is optional. JobTrack matches common column names (URL, link, title, company, date, status) and can infer which column holds links. Dates accept YYYY-MM-DD or day/month/year. If a row has no date, you will choose what to use. Blank status defaults to Draft. Links can appear inside a longer cell.",
+  "csvImportMissingHeaders": "Could not find any job links in this file.",
+  "csvImportMissingDateTitle": "Missing dates in CSV",
+  "csvImportMissingDateBody": "{count, plural, one{One imported row has no date in this file.} other{{count} imported rows have no date in this file.}} Choose a date to use for those applications.",
+  "@csvImportMissingDateBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "csvImportMissingDateUseToday": "Use today",
+  "csvImportMissingDatePickDate": "Choose date",
   "waitingFollowUpNotificationTitle": "Follow up on an application",
   "waitingFollowUpNotificationBody": "Check in on {roleName} at {companyName}.",
   "@waitingFollowUpNotificationBody": {

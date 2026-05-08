@@ -473,10 +473,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get csvImportHelpBody =>
-      'The first row should name columns. Supported headers include job link, URL, posting URL, title, role, company, date (YYYY-MM-DD), and optional status.';
+      'A header row is optional. JobTrack matches common column names (URL, link, title, company, date, status) and can infer which column holds links. Dates accept YYYY-MM-DD or day/month/year. If a row has no date, you will choose what to use. Blank status defaults to Draft. Links can appear inside a longer cell.';
 
   @override
-  String get csvImportMissingHeaders => 'Could not find a job link column.';
+  String get csvImportMissingHeaders =>
+      'Could not find any job links in this file.';
+
+  @override
+  String get csvImportMissingDateTitle => 'Missing dates in CSV';
+
+  @override
+  String csvImportMissingDateBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count imported rows have no date in this file.',
+      one: 'One imported row has no date in this file.',
+    );
+    return '$_temp0 Choose a date to use for those applications.';
+  }
+
+  @override
+  String get csvImportMissingDateUseToday => 'Use today';
+
+  @override
+  String get csvImportMissingDatePickDate => 'Choose date';
 
   @override
   String get waitingFollowUpNotificationTitle => 'Follow up on an application';

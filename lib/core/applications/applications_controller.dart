@@ -228,6 +228,7 @@ class ApplicationsController extends ChangeNotifier {
             isArchived: true,
             archiveGroupKey: key,
             archiveGroupLabel: groupLabel,
+            status: JobApplicationStatus.closedNotSelected,
           );
           await _isar.jobApplicationEntitys.putByApplicationId(
             jobApplicationToEntity(updated),
@@ -243,6 +244,7 @@ class ApplicationsController extends ChangeNotifier {
           isArchived: true,
           archiveGroupKey: key,
           archiveGroupLabel: groupLabel,
+          status: JobApplicationStatus.closedNotSelected,
         );
       }
     }

@@ -24,6 +24,7 @@ Future<void> showApplicationDetailSheet(
           final l10n = dragContext.l10n;
           return ApplicationDetailEditor(
             applicationId: applicationId,
+            modalSheetHostContext: sheetContext,
             scrollController: scrollController,
             listPrefix: <Widget>[
               Padding(

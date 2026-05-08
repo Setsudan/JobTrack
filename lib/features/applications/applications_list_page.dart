@@ -158,6 +158,82 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
     );
   }
 
+  List<JobApplication> _applyCsvResolvedDates(
+    CsvImportResult parsed,
+    DateTime resolved,
+  ) {
+    final DateTime fill = JobApplication.dateOnly(resolved);
+    return List<JobApplication>.generate(parsed.applications.length, (int i) {
+      final JobApplication a = parsed.applications[i];
+      if (parsed.hadSubmittedOnFromCsv[i]) {
+        return a;
+      }
+      return a.copyWith(submittedOn: fill);
+    });
+  }
+
+  Future<DateTime?> _promptCsvMissingDateChoice(int missingCount) async {
+    final l10n = context.l10n;
+    return showDialog<DateTime?>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text(l10n.csvImportMissingDateTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(l10n.csvImportMissingDateBody(missingCount)),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () {
+                  JobTrackHaptics.button();
+                  Navigator.pop(
+                    dialogContext,
+                    JobApplication.dateOnly(DateTime.now()),
+                  );
+                },
+                child: Text(l10n.csvImportMissingDateUseToday),
+              ),
+              const SizedBox(height: 8),
+              OutlinedButton(
+                onPressed: () async {
+                  JobTrackHaptics.button();
+                  final DateTime? picked = await showDatePicker(
+                    context: dialogContext,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (!dialogContext.mounted) {
+                    return;
+                  }
+                  if (picked != null) {
+                    Navigator.pop(
+                      dialogContext,
+                      JobApplication.dateOnly(picked),
+                    );
+                  }
+                },
+                child: Text(l10n.csvImportMissingDatePickDate),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                JobTrackHaptics.button();
+                Navigator.pop(dialogContext);
+              },
+              child: Text(l10n.commonCancel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _importCsvFromPicker() async {
     final l10n = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
@@ -208,9 +284,21 @@ class _ApplicationsListPageState extends State<ApplicationsListPage> {
       messenger.showSnackBar(SnackBar(content: Text(l10n.csvImportNoRows)));
       return;
     }
-    await context.read<ApplicationsController>().importApplications(
-      parsed.applications,
-    );
+    List<JobApplication> toImport = parsed.applications;
+    if (parsed.hasAnyMissingCsvDate) {
+      final int missing = parsed.hadSubmittedOnFromCsv
+          .where((bool had) => !had)
+          .length;
+      final DateTime? choice = await _promptCsvMissingDateChoice(missing);
+      if (!mounted) {
+        return;
+      }
+      if (choice == null) {
+        return;
+      }
+      toImport = _applyCsvResolvedDates(parsed, choice);
+    }
+    await context.read<ApplicationsController>().importApplications(toImport);
     if (!mounted) {
       return;
     }

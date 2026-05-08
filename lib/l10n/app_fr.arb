@@ -166,8 +166,19 @@
   },
   "csvImportNoRows": "Aucune ligne \u00e0 importer.",
   "csvImportHelpTitle": "Colonnes attendues",
-  "csvImportHelpBody": "La premi\u00e8re ligne nomme les colonnes. En-t\u00eates pris en charge : lien d\u0027offre, URL, titre, r\u00f4le, entreprise, date (AAAA-MM-JJ), statut (facultatif).",
-  "csvImportMissingHeaders": "Impossible de trouver une colonne de lien d\u0027offre.",
+  "csvImportHelpBody": "Une ligne d\u0027en-t\u00eate est facultative. JobTrack reconna\u00eet les noms de colonnes courants (URL, lien, titre, entreprise, date, statut) et peut deviner la colonne des liens. Dates : AAAA-MM-JJ ou jour/mois/ann\u00e9e. Sans date dans une ligne, vous choisissez la date \u00e0 appliquer. Statut vide : Brouillon par d\u00e9faut. Un lien peut se trouver dans une cellule plus longue.",
+  "csvImportMissingHeaders": "Aucun lien d\u0027offre trouv\u00e9 dans ce fichier.",
+  "csvImportMissingDateTitle": "Dates manquantes dans le CSV",
+  "csvImportMissingDateBody": "{count, plural, one{Une ligne import\u00e9e n\u0027a pas de date dans ce fichier.} other{{count} lignes import\u00e9es n\u0027ont pas de date dans ce fichier.}} Choisissez la date \u00e0 utiliser pour ces candidatures.",
+  "@csvImportMissingDateBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "csvImportMissingDateUseToday": "Aujourd\u0027hui",
+  "csvImportMissingDatePickDate": "Choisir une date",
   "waitingFollowUpNotificationTitle": "Relancer une candidature",
   "waitingFollowUpNotificationBody": "Pensez \u00e0 {roleName} chez {companyName}.",
   "@waitingFollowUpNotificationBody": {
